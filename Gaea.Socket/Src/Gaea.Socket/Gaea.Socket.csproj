@@ -41,7 +41,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AbsCallback.cs" />
+    <Compile Include="Base\ClientBase.cs" />
+    <Compile Include="Base\Common.cs" />
+    <Compile Include="Base\ServerBase.cs" />
+    <Compile Include="Connection\ConnectionBase.cs" />
+    <Compile Include="Connection\ConnectionSimple.cs" />
+    <Compile Include="EventArgs\ConnectedEventArgs.cs" />
+    <Compile Include="EventArgs\ErrorEventArgs.cs" />
+    <Compile Include="EventArgs\EventArgsBase.cs" />
+    <Compile Include="EventArgs\ReceivedEventArgs.cs" />
+    <Compile Include="EventArgs\SendEventArgs.cs" />
+    <Compile Include="Implt\Client.cs" />
+    <Compile Include="Implt\Server.cs" />
+    <Compile Include="Implt\ServerAysnc.cs" />
+    <Compile Include="Intrfcs\IClient.cs" />
+    <Compile Include="Intrfcs\IConnectedCallback.cs" />
+    <Compile Include="Intrfcs\IConnection.cs" />
+    <Compile Include="Intrfcs\IErrorCallback.cs" />
+    <Compile Include="Intrfcs\IReceivedCallback.cs" />
+    <Compile Include="Intrfcs\ISentCallback.cs" />
+    <Compile Include="Intrfcs\IServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TCPManager.cs" />
+    <Compile Include="Tcp\ITcp.cs" />
+    <Compile Include="Tcp\TcpBase.cs" />
+    <Compile Include="Tcp\TcpComplex.cs" />
+    <Compile Include="Tcp\TcpFactory.cs" />
+    <Compile Include="Tcp\TcpSimple.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
