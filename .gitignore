@@ -6,3 +6,9 @@
 /Gaea.Socket/.vs/Gaea.Socket/v16/.suo
 /Gaea.Socket/dll
 /Gaea.Socket/Src/Gaea.Socket/Gaea.Socket.csproj.user
+/Gaea.Socket/Samples/ConsoleServer/bin/Debug
+/Gaea.Socket/Samples/ConsoleServer/obj/Debug
+/Gaea.Socket/Samples/WpfClient/bin/Debug
+/Gaea.Socket/Samples/WpfClient/obj/Debug
+/Gaea.Socket/Samples/WpfServer/bin/Debug
+/Gaea.Socket/Samples/WpfServer/obj/Debug
