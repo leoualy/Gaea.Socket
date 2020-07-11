@@ -1,8 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GSocket.Implt;
+
 
 namespace GSocket
 {
@@ -10,14 +11,14 @@ namespace GSocket
     {
         public static IClient GetClient()
         {
-            return new Implt.Client();
+            return new Client();
         }
         public static IServer GetServer()
         {
-            return new Implt.Server();
+            return new Server();
         }
         public static IServer GetServerAsync() {
-            return new Implt.ServerAysnc();
+            return new ServerAysnc();
         }
     }
 }
