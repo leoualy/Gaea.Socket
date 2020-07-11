@@ -7,7 +7,7 @@ using GSocket.Implt;
 
 namespace GSocket
 {
-    public class TCPManager
+    public class TcpProxy
     {
         public static IClient GetClient()
         {

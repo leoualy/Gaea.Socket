@@ -63,7 +63,7 @@
     <Compile Include="Intrfcs\ISentCallback.cs" />
     <Compile Include="Intrfcs\IServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TCPManager.cs" />
+    <Compile Include="TcpProxy.cs" />
     <Compile Include="Tcp\ITcp.cs" />
     <Compile Include="Tcp\TcpBase.cs" />
     <Compile Include="Tcp\TcpComplex.cs" />
