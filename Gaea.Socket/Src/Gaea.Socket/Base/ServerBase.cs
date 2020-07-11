@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using GSocket.Tcp;
 
 namespace GSocket.Base
 {
@@ -12,7 +9,7 @@ namespace GSocket.Base
     {
         #region 构造函数
         internal ServerBase() : base() { }
-        internal ServerBase(Tcp.ITcp tcp) : base(tcp) { }
+        internal ServerBase(ITcp tcp) : base(tcp) { }
         #endregion
 
         public bool Start(int port,out string err, string host = null) {

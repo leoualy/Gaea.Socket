@@ -11,8 +11,7 @@ namespace GSocket.Tcp {
             msg = string.Empty;
             try {
                 IPEndPoint ipEPoint = new IPEndPoint(
-                    host == null ? IPAddress.Any : IPAddress.Parse(host),
-                    port);
+                    host == null ? IPAddress.Any : IPAddress.Parse(host), port);
                 s.Bind(ipEPoint);
                 return true;
             }

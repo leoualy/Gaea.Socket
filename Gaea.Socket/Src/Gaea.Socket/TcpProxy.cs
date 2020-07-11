@@ -18,7 +18,7 @@ namespace GSocket
             return new Server();
         }
         public static IServer GetServerAsync() {
-            return new ServerAysnc();
+            return new ServerAsync();
         }
     }
 }
