@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-
+using System.Net;
 
 namespace GSocket.Base
 {
     internal abstract class ClientBase : Common, IClient
     {
-        #region 构造函数
-        internal ClientBase() : base() { }
-        internal ClientBase(Tcp.ITcp tcp) : base(tcp) { }
-        #endregion
-
         public void Connect(int port, string host)
         {
-            Socket s = m_Tcp.CreateSocket();
+            Socket s =TcpSocket.CreateSocket();
             Task.Factory.StartNew(() =>
             {
-                if (!m_Tcp.TryConnect(s, host, port, out string msg)) {
+                if (!TryConnect(s, host, port, out string msg)) {
                     if (m_actErrorHandler != null) {
                         m_actErrorHandler(new ErrorEventArgs(-1,msg));
                         return;
@@ -34,6 +26,25 @@ namespace GSocket.Base
             });
         }
 
-        
+        protected bool TryConnect(Socket s, string host, int port, out string msg)
+        {
+            msg = string.Empty;
+            try
+            {
+                s.Connect(CreateRemoteEndPoint(port, host));
+                return true;
+            }
+            catch (Exception e)
+            {
+                msg = $"尝试连接服务器时出现异常:{e.Message}";
+                return false;
+            }
+        }
+        protected EndPoint CreateRemoteEndPoint(int port, string host)
+        {
+            EndPoint p = new IPEndPoint(IPAddress.Parse(host), port);
+            return p;
+        }
+
     }
 }

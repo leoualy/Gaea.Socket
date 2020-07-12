@@ -65,11 +65,7 @@
     <Compile Include="Intrfcs\IServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcpProxy.cs" />
-    <Compile Include="Tcp\ITcp.cs" />
-    <Compile Include="Tcp\TcpBase.cs" />
-    <Compile Include="Tcp\TcpComplex.cs" />
-    <Compile Include="Tcp\TcpFactory.cs" />
-    <Compile Include="Tcp\TcpSimple.cs" />
+    <Compile Include="TcpSocket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

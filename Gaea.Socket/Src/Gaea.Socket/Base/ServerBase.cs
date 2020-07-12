@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using GSocket.Tcp;
 
 namespace GSocket.Base
 {
-    internal abstract class ServerBase : Common, IServer
+    internal abstract class ServerBase:Common,IServer
     {
         #region 构造函数
         internal ServerBase() : base() { }
-        internal ServerBase(ITcp tcp) : base(tcp) { }
         #endregion
 
         public bool Start(int port,out string err, string host = null) {
-            Socket s = m_Tcp.CreateSocket();
+            Socket s = TcpSocket.CreateSocket();
             err = string.Empty;
             try {
-                m_Tcp.Bind(s, port, out string msg, host);
+                TcpSocket.Bind(s, port, out string msg, host);
                 s.Listen(5);
             }
             catch(Exception e) {
@@ -24,7 +22,7 @@ namespace GSocket.Base
                 return false;
             }
             m_ServerSocket = s;
-            OnAccept();
+            Accept(s);
             return true;
         }
 
@@ -40,24 +38,7 @@ namespace GSocket.Base
             }
         }
 
-        protected virtual void OnAccept() {
-            Task.Factory.StartNew(() => {
-                while (true) {
-                    try {
-                        Socket client = m_ServerSocket.Accept();
-                        Task.Factory.StartNew(() => {
-                            if (m_actConnectedHandler != null)
-                                m_actConnectedHandler(new ConnectedEventArgs(GetConnection(client)));
-                        });
-                    }
-                    catch(Exception e) {
-                        if (m_actErrorHandler != null) {
-                            m_actErrorHandler(new ErrorEventArgs(-1, $"Accept异常:{e.Message}"));
-                        }
-                    }
-                }
-            });
-        }
+        protected abstract void Accept(Socket s);
 
         protected Socket m_ServerSocket;
     }
