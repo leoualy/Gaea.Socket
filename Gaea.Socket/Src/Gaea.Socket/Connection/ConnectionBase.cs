@@ -17,7 +17,7 @@ namespace GSocket.Connection {
         internal ConnectionBase(Socket s) : this(s, TcpFactory.GetTcpSimple()) { }
         #endregion
 
-        public void BeginReceive() {
+        public virtual void BeginReceive() {
             Task.Factory.StartNew(() => {
                 while (true) {
                     // 根据协议取前HEADER_LEN为包内容长度，不包含该HEADER_LEN

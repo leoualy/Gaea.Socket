@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Net.Sockets;
 using GSocket.Base;
+using System;
 
 namespace GSocket.Implt {
     internal class ServerAsync:ServerBase {
-        private readonly int ACCEPT_COUNT = 20;
+        private readonly int ACCEPT_COUNT = 500;
         protected override void OnAccept() {
             for(int i = 0; i <ACCEPT_COUNT; i++)
             {
@@ -14,14 +15,18 @@ namespace GSocket.Implt {
         }
 
         private void AcceptCallback(SocketAsyncEventArgs e) {
-            Socket s = e.AcceptSocket;
-            Task.Factory.StartNew(() => {
-                if (m_actConnectedHandler != null)
+            if (e.SocketError == SocketError.Success)
+            {
+                Socket s = e.AcceptSocket;
+                Task.Factory.StartNew(() =>
                 {
-                    m_actConnectedHandler(new ConnectedEventArgs(GetConnection(s)));
-                    
-                }
-            });
+                    if (m_actConnectedHandler != null)
+                    {
+                        m_actConnectedHandler(new ConnectedEventArgs(GetConnection(s)));
+                    }
+                });
+            }
+            // 处理accept后,继续投递accept请求
             PostAccept(e);
         }
 

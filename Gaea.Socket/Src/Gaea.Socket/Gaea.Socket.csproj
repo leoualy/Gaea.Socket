@@ -45,6 +45,7 @@
     <Compile Include="Base\ClientBase.cs" />
     <Compile Include="Base\Common.cs" />
     <Compile Include="Base\ServerBase.cs" />
+    <Compile Include="Connection\ConnectionAsync.cs" />
     <Compile Include="Connection\ConnectionBase.cs" />
     <Compile Include="Connection\ConnectionSimple.cs" />
     <Compile Include="EventArgs\ConnectedEventArgs.cs" />

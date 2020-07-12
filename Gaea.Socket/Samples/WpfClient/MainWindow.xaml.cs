@@ -26,18 +26,29 @@ namespace WpfClient
         public MainWindow()
         {
             InitializeComponent();
-            //client = TCPManager.GetClient();
         }
-        IClient client;
-        IConnection conn;
 
+        IClient client;
         private void btn_click(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => {
-                for (int i = 0; i <500; i++) {
-                    client = TcpProxy.GetClient();
-                    client.Connect(6000, "127.0.0.1");
-                    //Thread.Sleep(10);
+                for (int i = 0; i <1; i++) {
+                    Task.Factory.StartNew(() =>
+                    {
+                        IClient client = TcpProxy.GetClient();
+                        client.Connect(6000, "127.0.0.1");
+                        client.SetConnectedHandler((ce) =>
+                        {
+                            if (ce.StatusCode != 0)
+                            {
+                                MessageBox.Show(ce.Msg);
+                                return;
+                            }
+                            ce.Conn.Send(Encoding.UTF8.GetBytes("hello world"));
+                            MessageBox.Show(ce.Conn.ToString());
+                        });
+                    });
+                    // Thread.Sleep(1);
                 }
             });
             //Task.Factory.StartNew(() => {
@@ -65,17 +76,17 @@ namespace WpfClient
 
         private void btn_send(object sender, RoutedEventArgs e)
         {
-            string msg = "hello";
-            Task.Factory.StartNew(() =>
-            {
-                int i = 1000;
-                while (i-->0)
-                {
-                    msg += "0";
-                    conn.Send(Encoding.UTF8.GetBytes(msg));
-                    Thread.Sleep(200);
-                }
-            });
+            //string msg = "hello";
+            //Task.Factory.StartNew(() =>
+            //{
+            //    int i = 1000;
+            //    while (i-->0)
+            //    {
+            //        msg += "0";
+            //        conn.Send(Encoding.UTF8.GetBytes(msg));
+            //        Thread.Sleep(200);
+            //    }
+            //});
         }
     }
 }

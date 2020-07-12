@@ -7,10 +7,33 @@ using System.Text;
 
 namespace GSocket.Tcp {
     internal class TcpComplex : TcpBase {
+        private void IO_Completed(SocketAsyncEventArgs e)
+        {
+            if (e.SocketError == SocketError.Success)
+            {
+                Console.WriteLine(Encoding.UTF8.GetString(e.Buffer));
+            }
+        }
         public override int TryReceive(Socket s, byte[] buf, int size, out string msg) {
+            
             // 存入接收缓冲区的偏移位置
             int offset = 0;
             msg = string.Empty;
+            SocketAsyncEventArgs rw = new SocketAsyncEventArgs();
+            rw.SetBuffer(buf, 0, buf.Length);
+
+            rw.Completed += (o, e) =>
+            {
+                IO_Completed(e);
+            };
+            if (!s.ReceiveAsync(rw))
+            {
+                IO_Completed(rw);
+            }
+            
+             s.ReceiveAsync(rw);
+
+            return 0;
             while (offset < size) {
                 try {
                     int readLen = (size - offset) >= C_MaxReadLen ? C_MaxReadLen : size - offset;

@@ -20,7 +20,7 @@ namespace GSocket.Base
         #endregion
 
         protected virtual IConnection GetConnection(Socket s) {
-            return new Connection.ConnectionSimple(s);
+            return new Connection.ConnectionAsync(s);
         }
 
         protected ITcp m_Tcp;
