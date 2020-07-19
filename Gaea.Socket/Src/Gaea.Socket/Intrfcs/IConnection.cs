@@ -6,11 +6,7 @@ using System.Text;
 namespace GSocket
 {
     public interface IConnection :ISentCallback,IReceivedCallback,IErrorCallback {
-        /// <summary>
-        /// 开始接收数据
-        /// </summary>
-        /// <param name="callback"></param>
-        void BeginReceive();
+        void Receive(int size,Action<byte[]> callback);
         /// <summary>
         /// 发送数据
         /// </summary>

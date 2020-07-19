@@ -32,7 +32,7 @@ namespace WpfClient
         private void btn_click(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => {
-                for (int i = 0; i <1; i++) {
+                for (int i = 0; i <8; i++) {
                     Task.Factory.StartNew(() =>
                     {
                         IClient client = TcpProxy.GetClient();
@@ -44,32 +44,16 @@ namespace WpfClient
                                 MessageBox.Show(ce.Msg);
                                 return;
                             }
-                            ce.Conn.Send(Encoding.UTF8.GetBytes("hello world"));
-                            MessageBox.Show(ce.Conn.ToString());
+                            ce.Conn.Send(Encoding.UTF8.GetBytes("hello world909000000000000000000000000000000009090909091111666666666666666666666666" +
+                                "7777777777778888888888888888888888888811111111111111111111111111111111111111111111111100000000000000000000" +
+                                "6666666666666666666666666pppppppppppppppppppppppppppppppppppppppppppppppppppp10110"));
+      
                         });
                     });
                     // Thread.Sleep(1);
                 }
             });
-            //Task.Factory.StartNew(() => {
-            //    for (int i = 0; i < 10000; i++) {
-            //        client = TCPManager.GetClient();
-            //        client.Connect(6001, "127.0.0.1");
-
-            //        //Thread.Sleep(10);
-            //    }
-            //});
-
-
-            //client.SetConnectedHandler((ce) => {
-            //    if (ce.StatusCode != 0) {
-            //        MessageBox.Show(ce.Msg);
-            //        return;
-            //    }
-            //    MessageBox.Show(ce.Conn.ToString());
-            //});
-
-            //client.Connect(6000, "127.0.0.1");
+            
         }
         
 

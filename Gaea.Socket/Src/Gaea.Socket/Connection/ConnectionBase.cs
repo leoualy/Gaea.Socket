@@ -16,7 +16,7 @@ namespace GSocket.Connection {
         }
         #endregion
 
-        public abstract void BeginReceive();
+        public abstract void Receive(int size,Action<byte[]> callback);
         public abstract void Send(byte[] buf);
 
         public string GetSourceHost() {

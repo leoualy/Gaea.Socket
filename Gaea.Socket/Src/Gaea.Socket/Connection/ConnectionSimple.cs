@@ -9,37 +9,19 @@ using System.Net;
 namespace GSocket.Connection {
     internal sealed class ConnectionSimple : ConnectionBase {
         internal ConnectionSimple(Socket s) : base(s) { }
-        public override void BeginReceive()
+
+        public override void Receive(int size,Action<byte[]> callback)
         {
-            Task.Factory.StartNew(() => {
-                while (true)
+            Task.Factory.StartNew(() =>
+            {
+                byte[] buf = new byte[size];
+                int totalLen = 0;
+                while (totalLen<size)
                 {
-                    // 根据协议取前HEADER_LEN为包内容长度，不包含该HEADER_LEN
-                    byte[] buf = new byte[4];
-                    if (TryReceive(m_Socket, buf, 4, out string msg) <= 0)
-                    {
-                        if (m_actErrorHandler != null)
-                        {
-                            m_actErrorHandler(new ErrorEventArgs(-1, msg));
-                            return;
-                        }
-                    }
-
-                    int contentLength = BitConverter.ToInt32(buf, 0);
-                    buf = new byte[contentLength];
-                    if (TryReceive(m_Socket, buf, contentLength, out msg) <= 0)
-                    {
-                        if (m_actErrorHandler != null)
-                        {
-                            m_actErrorHandler(new ErrorEventArgs(-1, msg));
-                            return;
-                        }
-                    }
-
-                    Task.Factory.StartNew(() => {
-                        m_actReceivedHandler(new ReceivedEventArgs(buf));
-                    });
+                    totalLen += m_Socket.Receive(buf, totalLen, size - totalLen, SocketFlags.None);
                 }
+                if (callback != null) callback(buf);
+                return;
             });
         }
 
@@ -59,33 +41,6 @@ namespace GSocket.Connection {
             }
             if (m_actSentHandler == null) return;
             m_actSentHandler(new SendEventArgs(len));
-        }
-
-        private int TryReceive(Socket s, byte[] buf, int size, out string msg)
-        {
-            // 存入接收缓冲区的偏移位置
-            int offset = 0;
-            msg = string.Empty;
-            while (offset < size)
-            {
-                try
-                {
-                    int len = s.Receive(buf, offset, size - offset, SocketFlags.None);
-                    if (len == 0)
-                    {
-                        msg = $"远程连接已关闭,远程地址:{((IPEndPoint)s.RemoteEndPoint).Address}";
-                        s.Close();
-                        return len;
-                    }
-                    offset += len;
-                }
-                catch (Exception e)
-                {
-                    msg = $"接收数据时出现异常,异常消息:{e.Message}";
-                    return -1;
-                }
-            }
-            return offset;
         }
 
         private int TrySend(Socket s, byte[] buf, out string msg)
