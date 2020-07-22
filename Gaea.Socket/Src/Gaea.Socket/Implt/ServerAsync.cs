@@ -6,7 +6,7 @@ using GSocket.Connection;
 
 namespace GSocket.Implt {
     internal class ServerAsync:ServerBase {
-        private readonly int ACCEPT_COUNT = 500;
+        private readonly int ACCEPT_COUNT =100;
 
         protected override void Accept(Socket s)
         {

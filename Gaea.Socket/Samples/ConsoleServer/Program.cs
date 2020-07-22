@@ -18,16 +18,16 @@ namespace ConsoleServer
             int count = 0;
             server.SetConnectedHandler((e) => {
                     Console.WriteLine($"Connection Count is:{Interlocked.Increment(ref count)},Port is:{e.Conn.GetSourcePort()}");
-                e.Conn.Receive(4,(buf)=>
-                {
-                    int len = BitConverter.ToInt32(buf, 0);
-                    e.Conn.Receive(len, (cbuf) =>
-                    {
-                        Console.WriteLine(Encoding.UTF8.GetString(cbuf));
-                    });
-                });
+                //e.Conn.Receive(4,(buf)=>
+                //{
+                //    int len = BitConverter.ToInt32(buf, 0);
+                //    e.Conn.Receive(len, (cbuf) =>
+                //    {
+                //        Console.WriteLine(Encoding.UTF8.GetString(cbuf));
+                //    });
+                //});
             });
-            server.Start(6000,out _);
+            server.Start(7000,out _);
             Console.WriteLine("start...");
             Console.Read();
         }
