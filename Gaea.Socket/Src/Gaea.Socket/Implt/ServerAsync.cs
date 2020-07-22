@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using GSocket.Base;
 using System;
 using GSocket.Connection;
+using System.Threading;
 
 namespace GSocket.Implt {
     internal class ServerAsync:ServerBase {

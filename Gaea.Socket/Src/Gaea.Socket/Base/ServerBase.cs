@@ -6,10 +6,6 @@ namespace GSocket.Base
 {
     internal abstract class ServerBase:Common,IServer
     {
-        #region 构造函数
-        internal ServerBase() : base() { }
-        #endregion
-
         public bool Start(int port,out string err, string host = null) {
             Socket s = TcpSocket.CreateSocket();
             err = string.Empty;
